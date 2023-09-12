@@ -2,10 +2,31 @@
 import axios from 'axios';
 
 const conteinerElements = document.querySelector('.js-movie-list');
+const guardElements = document.querySelector('.js-guard');
+
+const defaults = {
+  poster: "https://www.reelviews.net/resources/img/default_poster.jpg",
+  date: "XXXX-XX-XX",
+  title: "Title not found",
+  vote: "XX.XX",
+};
+
+let page = 1;
+let totalPage = 498;
+let dataResult = [];
+
+let options = {
+  root: null,
+  rootMargin: '300px',
+//   threshold: 1.0,
+};
+
+let observer = new IntersectionObserver(handlerLoad, options);
+
 
 const BASE_URL = 'https://api.themoviedb.org/3/trending/movie/week';
     const api_key = 'a2883c737e33341efae828fe3a93a67d';
-    // page = currentPage;
+    
 
 async function searchMovie(currentPage = '1') {
   const options = {
@@ -16,18 +37,22 @@ async function searchMovie(currentPage = '1') {
   };
   try {
     const response = await axios.get(BASE_URL, options);
-    //   console.log(response);
+      console.log(response);
       const dataResult = response.data.results;
-      console.log(response.data.results);
-      conteinerElements.insertAdjacentHTML(
-        'beforeend',createMurcup(dataResult)
-      );
+    
+      
+     conteinerElements.insertAdjacentHTML( 'beforeend', createMurcup(dataResult));
+      
+      if (response.data.page < response.data.total_pages) {
+        observer.observe(guardElements);
+      } 
+      
   } catch (error) {
     console.log(error);
   }
 }
 
-searchMovie(2);
+searchMovie();
 
  
 function createMurcup(arr) {
@@ -48,3 +73,22 @@ function createMurcup(arr) {
       })
       .join('');
 }
+
+function handlerLoad(entries) {
+    entries.forEach(entry => {
+         console.log(entry)
+        if (entry.isIntersecting) {
+            page += 1;
+            searchMovie(page);
+            if (response.data.page >= response.data.total_pages) {
+        observer.unobserve(guardElements);
+      }
+            // conteinerElements.insertAdjacentHTML(
+            //   'beforeend',
+            //   createMurcup(dataResult)
+            // );
+        }
+        
+     });
+}
+
