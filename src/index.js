@@ -59,13 +59,13 @@ function createMurcup(arr) {
     return arr
       .map(({ poster_path, release_date, original_title, vote_average }) => {
         return `<li class="movie-card">
-        <img src="${
+        <img class= "img-movie" src="${
           poster_path
             ? 'https://image.tmdb.org/t/p/w300' + poster_path
-            : 'https://example.com/default-poster.jpg' 
+            : 'https://example.com/default-poster.jpg'
         }" alt="${original_title || 'Unknown Title'}">
         <div class="movie-info">
-            <h2>${original_title || 'Unknown Title'}</h2>
+            <h2 >${original_title || 'Unknown Title'}</h2>
             <p>Release Date: ${release_date || 'Unknown Date'}</p>
             <p>Vote Average: ${vote_average || 'Unknown Vote'}</p>
         </div>
