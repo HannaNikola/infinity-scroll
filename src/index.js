@@ -83,10 +83,7 @@ function handlerLoad(entries) {
             if (response.data.page >= response.data.total_pages) {
         observer.unobserve(guardElements);
       }
-            // conteinerElements.insertAdjacentHTML(
-            //   'beforeend',
-            //   createMurcup(dataResult)
-            // );
+           
         }
         
      });
