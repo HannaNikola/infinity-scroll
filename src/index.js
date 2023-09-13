@@ -11,7 +11,7 @@ const defaults = {
   vote: "XX.XX",
 };
 
-let page = 497;
+let page = 1;
 let totalPage = 498;
 let dataResult = [];
 let responseData = [];
@@ -29,7 +29,7 @@ const BASE_URL = 'https://api.themoviedb.org/3/trending/movie/week';
     const api_key = 'a2883c737e33341efae828fe3a93a67d';
     
 
-async function searchMovie(currentPage = '497') {
+async function searchMovie(currentPage = '1') {
   const options = {
     params: {
       api_key: 'a2883c737e33341efae828fe3a93a67d',
@@ -40,17 +40,17 @@ async function searchMovie(currentPage = '497') {
     const response = await axios.get(BASE_URL, options);
       console.log(response);
      dataResult = response.data.results;
-     responseData = response.data.total_pages;
+     responseData = response.data;
     
       
      conteinerElements.insertAdjacentHTML( 'beforeend', createMurcup(dataResult));
       
-      if (response.data.page < response.data.total_pages) {
+      if (responseData.page < responseData.total_pages) {
         observer.observe(guardElements);
       }
-      else {
-        observer.unobserve(guardElements);
-      }
+      // else {
+      //   observer.unobserve(guardElements);
+      // }
       
   } catch (error) {
     console.log(error);
