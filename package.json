@@ -5,7 +5,7 @@
   "homepage": "https://HannaNikola.github.io/infinity-scroll",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /https://github.com/infinity-scroll/"
+    "build": "parcel build src/*.html --public-url /infinity-scroll/"
   },
   "repository": {
     "type": "git",
