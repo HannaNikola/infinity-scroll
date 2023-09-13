@@ -11,9 +11,10 @@ const defaults = {
   vote: "XX.XX",
 };
 
-let page = 1;
+let page = 497;
 let totalPage = 498;
 let dataResult = [];
+let responseData = [];
 
 let options = {
   root: null,
@@ -28,7 +29,7 @@ const BASE_URL = 'https://api.themoviedb.org/3/trending/movie/week';
     const api_key = 'a2883c737e33341efae828fe3a93a67d';
     
 
-async function searchMovie(currentPage = '1') {
+async function searchMovie(currentPage = '497') {
   const options = {
     params: {
       api_key: 'a2883c737e33341efae828fe3a93a67d',
@@ -38,14 +39,18 @@ async function searchMovie(currentPage = '1') {
   try {
     const response = await axios.get(BASE_URL, options);
       console.log(response);
-      const dataResult = response.data.results;
+     dataResult = response.data.results;
+     responseData = response.data.total_pages;
     
       
      conteinerElements.insertAdjacentHTML( 'beforeend', createMurcup(dataResult));
       
       if (response.data.page < response.data.total_pages) {
         observer.observe(guardElements);
-      } 
+      }
+      else {
+        observer.unobserve(guardElements);
+      }
       
   } catch (error) {
     console.log(error);
@@ -75,17 +80,16 @@ function createMurcup(arr) {
 }
 
 function handlerLoad(entries) {
-    entries.forEach(entry => {
-         console.log(entry)
-        if (entry.isIntersecting) {
-            page += 1;
-            searchMovie(page);
-            if (response.data.page >= response.data.total_pages) {
-        observer.unobserve(guardElements);
-      }
-           
-        }
+  entries.forEach(entry => {
+    console.log(entry)
+    if (entry.isIntersecting) {
+      page += 1;
+      searchMovie(page);
+      //       if (response.data.page >= response.data.total_pages) {
+      //           observer.unobserve(guardElements);
+      // }
+    }
         
-     });
+  });
 }
 
